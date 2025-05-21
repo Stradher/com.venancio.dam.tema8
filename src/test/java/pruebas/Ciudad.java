@@ -1,4 +1,4 @@
-package com.venancio.dam.tema8.venancio;
+package pruebas;
 
 public class Ciudad {
 	private int id;

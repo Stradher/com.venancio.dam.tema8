@@ -1,4 +1,4 @@
-package com.venancio.dam.tema8.venancio;
+package pruebas;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
