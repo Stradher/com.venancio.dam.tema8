@@ -44,6 +44,13 @@ public class Ciudad {
 	public void setPopulation(int population) {
 		this.population = population;
 	}
+
+	@Override
+	public String toString() {
+		return "\n \t Ciudad [id=" + id + ", name=" + name + ", countryCode=" + countryCode + ", district=" + district
+				+ ", population=" + population + "]";
+	}
+	
 	
 	
 	
