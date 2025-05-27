@@ -81,4 +81,41 @@ public class CiudadDAO {
 		return resultado;
 	}
 	
+	//MÉTODO QUE DEVUELVE LAS CIUDADES DE UN PAÍS POR CÓDIGO
+	public static List<Ciudad> DevolverCiudadesPorCodigoPais(String codigo) throws SQLException{
+		List<Ciudad> resultado = new ArrayList<Ciudad>();
+		
+		try(Connection conexion = creaConexion();
+				PreparedStatement consulta = conexion.prepareStatement("select * from city where CountryCode = ? ORDER BY Name")) {
+			consulta.setString(1, codigo);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+			
+			while(resultadoConsulta.next()) {
+				Ciudad ciudad = new Ciudad(resultadoConsulta.getInt("ID"), resultadoConsulta.getString("Name"), resultadoConsulta.getString("CountryCode"), resultadoConsulta.getString("District"), resultadoConsulta.getInt("Population"));
+				resultado.add(ciudad);
+			}
+		}
+		return resultado;
+	}
+	
+	//MÉTODO PARA INTRODUCIR UNA NUEVA CIUDAD
+	public static boolean aniadirCiudad(Ciudad ciudad) throws SQLException{
+		String nombre = ciudad.getName();
+		String countryCode = ciudad.getCountryCode();
+		String district = ciudad.getDistrict();
+		int population = ciudad.getPopulation();
+		
+		try(Connection conexion = creaConexion();
+				PreparedStatement consulta = conexion.prepareStatement("INSERT INTO city (Name, CountryCode, District, Population) VALUES (?, ?, ?, ?);")){
+			consulta.setString(1, nombre);
+			consulta.setString(2, countryCode);
+			consulta.setString(3, district);
+			consulta.setInt(4, population);
+			
+			consulta.executeUpdate();
+			System.out.println("CIUDAD AÑADIDA CORRECTAMENTE");
+			return true;
+		}
+	}
+	
 }
