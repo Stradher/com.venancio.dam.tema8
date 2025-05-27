@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PaisDAO {
 	private static Connection crearConexion() throws SQLException {
-		Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/world", "root", "");
+		Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/world", "root", "toor");
 		return conexion;
 	}
 	
