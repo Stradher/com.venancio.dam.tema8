@@ -50,6 +50,9 @@ public class Main {
 			case 11:
 				introducirCiudad(sc);
 				break;
+			case 12:
+				modificarPoblacionPais(sc);
+				break;
 			}
 		}
 	}
@@ -69,6 +72,7 @@ public class Main {
 		System.out.println("9- MOSTRAR TODAS LAS CIUDADES DE UN PAIS POR CÓDIGO");
 		System.out.println("10- AÑADIR UN PAÍS");
 		System.out.println("11- AÑADIR UNA CIUDAD");
+		System.out.println("12- MODIFICAR POBLACIÓN DE UN PAÍS");
 
 
 
@@ -264,14 +268,29 @@ public class Main {
 		}
 		
 	//METODO PARA MODIFICAR LA POBLACION DE UN PAIS
-		public static void modificarPoblacionPais(Scanner sc) {
-			Pais pais;
+		public static void modificarPoblacionPais(Scanner sc){
+			Pais pais = null;
 			System.out.println("INTRODUZCA EL CODIGO DEL PAIS: ");
 			String codigo = sc.nextLine();
 			
 			try {
 				pais = PaisDAO.devolverPaisPorCodigo(codigo);
 			}catch(SQLException e) {
+				System.err.println(e.getMessage());
+			}
+			
+			if(pais==null) {
+				System.out.println("NO EXISTE NINGÚN PAÍS CON ESE CÓDIGO");
+				return;
+			}
+			
+			System.out.println("INTRODUZCA LA NUEVA POBLACIÓN");
+			int poblacion = sc.nextInt();
+			sc.nextLine();
+			
+			try {
+				PaisDAO.modificarPoblacionPais(pais, poblacion);
+			} catch (SQLException e) {
 				System.err.println(e.getMessage());
 			}
 		}

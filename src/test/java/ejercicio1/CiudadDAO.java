@@ -12,7 +12,7 @@ import com.mysql.cj.xdevapi.Result;
 
 public class CiudadDAO {
 	private static Connection creaConexion() throws SQLException {
-		Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/world", "root", "");
+		Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/world", "root", "toor");
 		return conexion;
 	}
 
