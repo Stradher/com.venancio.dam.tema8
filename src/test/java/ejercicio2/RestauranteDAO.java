@@ -22,11 +22,31 @@ public class RestauranteDAO {
 			ResultSet rs = consulta.executeQuery();
 			
 			while(rs.next()) {
-				Restaurante restaurante = new Restaurante(rs.getInt("id"), rs.getString("nombre"), rs.getInt("capacidad"));
+				Restaurante restaurante = new Restaurante(rs.getInt("id"), rs.getString("nombre"), rs.getInt("capacidad"), PlatoDAO.devolverPlatosRestaurante(rs.getInt("id")));
 				resultado.add(restaurante);
 				
 			}
 		}
 		return resultado;
 	}
+	
+	public static List<Restaurante> devolverRestaurantesCiudad(int id_ciudad) throws SQLException{
+		List<Restaurante> resultado = new ArrayList<Restaurante>();
+		
+		try(Connection conexion = crearConexion();
+				PreparedStatement consulta = conexion.prepareStatement("SELECT * FROM restaurante WHERE ciudad_id = ?")){
+			consulta.setInt(1, id_ciudad);
+			ResultSet rs = consulta.executeQuery();
+			
+			while(rs.next()) {
+				Restaurante restaurante = new Restaurante(rs.getInt("id"), rs.getString("nombre"), rs.getInt("capacidad"), PlatoDAO.devolverPlatosRestaurante(rs.getInt("id")));
+				resultado.add(restaurante);
+			}
+		}
+		
+		return resultado;
+	}
+
+	
+	
 }

@@ -1,5 +1,6 @@
 package ejercicio2;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class Restaurante {
@@ -12,6 +13,13 @@ public class Restaurante {
 		this.idRestaurante = idRestaurante;
 		this.nombre = nombre;
 		this.capacidad = capacidad;
+	}
+	
+	public Restaurante(int idRestaurante, String nombre, int capacidad, List<Plato> platos) {
+		this.idRestaurante = idRestaurante;
+		this.nombre = nombre;
+		this.capacidad = capacidad;
+		this.platos = platos;
 	}
 
 	public int getIdRestaurante() {
@@ -42,11 +50,30 @@ public class Restaurante {
 	@Override
 	public String toString() {
 		return "\n \t Restaurante [idRestaurante=" + idRestaurante + ", nombre=" + nombre + ", platos=" + platos
-				+ ", capacidad=" + capacidad + "]";
+				+ ", capacidad=" + capacidad + "] \n";
 	}
 	
+	public void imprimirRestaurante() {
+		try {
+			System.out.println(nombre + " " + calcularPrecioMedio() + "€");
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
+	}
 	
-	
+	public float calcularPrecioMedio() throws SQLException{
+		float sumatorio = 0;
+		float resultado = 0;
+		List<Plato> platos = PlatoDAO.devolverPlatosRestaurante(idRestaurante);
+		
+		for(Plato plato : platos) {
+			sumatorio += plato.getPrecio();
+		}
+		
+		resultado = sumatorio / platos.size();
+		
+		return resultado;
+	}
 	
 	
 	

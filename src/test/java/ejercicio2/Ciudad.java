@@ -1,5 +1,6 @@
 package ejercicio2;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class Ciudad {
@@ -13,6 +14,13 @@ public class Ciudad {
 		this.idCiudad = idCiudad;
 		this.nombre = nombre;
 		this.habitantes = habitantes;		
+	}
+	
+	public Ciudad(int idCiudad, String nombre, int habitantes, List<Restaurante> restaurantes) {
+		this.idCiudad = idCiudad;
+		this.nombre = nombre;
+		this.habitantes = habitantes;
+		this.restaurantes = restaurantes;
 	}
 
 	public int getIdCiudad() {
@@ -49,10 +57,47 @@ public class Ciudad {
 
 	@Override
 	public String toString() {
-		return "\n \t Ciudad [idCiudad=" + idCiudad + ", nombre=" + nombre + ", habitantes=" + habitantes + ", restaurantes="
-				+ restaurantes + "]";
+		return "\n Ciudad [idCiudad=" + idCiudad + ", nombre=" + nombre + ", habitantes=" + habitantes + ", restaurantes="
+				+ restaurantes + "] \n";
 	}
 	
+	public void imprimirCiudad() {
+		try {
+		System.out.println();
+		System.out.println(nombre + " " + CiudadDAO.calcularPrecioMedio(idCiudad) + "€");
+		System.out.println("========");
+		}catch(SQLException e) {
+			System.err.println(e.getMessage());
+		}
+	}
+	
+	public Restaurante restauranteMasCaro() throws SQLException {
+		float precioMax = 0;
+		Restaurante resultado = null;
+		
+		for(Restaurante restaurante : restaurantes) {
+			if(restaurante.calcularPrecioMedio()>precioMax) {
+				precioMax = restaurante.calcularPrecioMedio();
+				resultado = restaurante;
+			}
+		}
+		
+		return resultado;
+	}
+	
+	public Restaurante restauranteMasBarato() throws SQLException {
+		float precioMin = 999999;
+		Restaurante resultado = null;
+		
+		for(Restaurante restaurante : restaurantes) {
+			if(restaurante.calcularPrecioMedio()<precioMin) {
+				precioMin = restaurante.calcularPrecioMedio();
+				resultado = restaurante;
+			}
+		}
+		
+		return resultado;
+	}
 	
 	
 	

@@ -32,7 +32,7 @@ public class Plato {
 
 	@Override
 	public String toString() {
-		return "Plato [idPlato=" + idPlato + ", nombre=" + nombre + ", precio=" + precio + "]";
+		return "\n \t \t Plato [idPlato=" + idPlato + ", nombre=" + nombre + ", precio=" + precio + "]";
 	}
 	
 	
